@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: stateful-playground
+  kafka:
+    bootstrap-servers: localhost:9092
+    apache.ignite.addresses: 127.0.0.1:10800
+
+topic:
+  input: Input.Topic
+  output: Output.Topic
+

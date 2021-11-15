@@ -1,0 +1,69 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.shash.tracing'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+	set('springCloudVersion', "2020.0.0")
+}
+
+dependencies {
+	// https://mvnrepository.com/artifact/io.jaegertracing/jaeger-core
+	compile group: 'io.jaegertracing', name: 'jaeger-core', version: '1.5.0'
+	// https://mvnrepository.com/artifact/io.jaegertracing/jaeger-client
+	compile group: 'io.jaegertracing', name: 'jaeger-client', version: '1.5.0'
+	// https://mvnrepository.com/artifact/io.jaegertracing/jaeger-thrift
+	compile group: 'io.jaegertracing', name: 'jaeger-thrift', version: '1.5.0'
+	// https://mvnrepository.com/artifact/io.jaegertracing/jaeger-zipkin
+	compile group: 'io.jaegertracing', name: 'jaeger-zipkin', version: '1.5.0'
+
+	implementation 'io.zipkin.brave:brave:5.11.2'
+	// https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-messaging
+	compile group: 'io.zipkin.brave', name: 'brave-instrumentation-messaging', version: '5.13.3'
+	// https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-kafka-clients
+	compile group: 'io.zipkin.brave', name: 'brave-instrumentation-kafka-clients', version: '5.13.3'
+	// https://mvnrepository.com/artifact/io.zipkin.brave/brave-instrumentation-kafka-streams
+	compile group: 'io.zipkin.brave', name: 'brave-instrumentation-kafka-streams', version: '5.13.3'
+
+	// https://mvnrepository.com/artifact/io.zipkin.reporter2/zipkin-sender-urlconnection
+	compile group: 'io.zipkin.reporter2', name: 'zipkin-sender-urlconnection', version: '2.16.3'
+
+
+	compile group: 'org.apache.ignite', name: 'ignite-core', version: '2.11.0'
+
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.kafka:kafka-streams'
+	implementation 'org.springframework.cloud:spring-cloud-sleuth-zipkin'
+	implementation 'org.springframework.kafka:spring-kafka'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
